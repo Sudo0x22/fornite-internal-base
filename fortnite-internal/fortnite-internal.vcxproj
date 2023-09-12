@@ -113,7 +113,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
@@ -142,6 +142,15 @@
     <ClInclude Include="ext\sdk\hook\minhook\src\trampoline.h" />
     <ClInclude Include="ext\sdk\overlay\defines\defines.h" />
     <ClInclude Include="ext\sdk\overlay\DX11\DX11.h" />
+    <ClInclude Include="ext\sdk\overlay\imgui\imconfig.h" />
+    <ClInclude Include="ext\sdk\overlay\imgui\imgui.h" />
+    <ClInclude Include="ext\sdk\overlay\imgui\imgui_color_gradient.h" />
+    <ClInclude Include="ext\sdk\overlay\imgui\imgui_impl_dx11.h" />
+    <ClInclude Include="ext\sdk\overlay\imgui\imgui_impl_win32.h" />
+    <ClInclude Include="ext\sdk\overlay\imgui\imgui_internal.h" />
+    <ClInclude Include="ext\sdk\overlay\imgui\imstb_rectpack.h" />
+    <ClInclude Include="ext\sdk\overlay\imgui\imstb_textedit.h" />
+    <ClInclude Include="ext\sdk\overlay\imgui\imstb_truetype.h" />
     <ClInclude Include="ext\sdk\overlay\overlay.h" />
     <ClInclude Include="ext\sdk\sdk.h" />
     <ClInclude Include="ext\sdk\utils\module\module.h" />
@@ -159,6 +168,13 @@
     <ClCompile Include="ext\sdk\hook\minhook\src\hde\hde64.c" />
     <ClCompile Include="ext\sdk\hook\minhook\src\hook.c" />
     <ClCompile Include="ext\sdk\hook\minhook\src\trampoline.c" />
+    <ClCompile Include="ext\sdk\overlay\imgui\imgui.cpp" />
+    <ClCompile Include="ext\sdk\overlay\imgui\imgui_color_gradient.cpp" />
+    <ClCompile Include="ext\sdk\overlay\imgui\imgui_demo.cpp" />
+    <ClCompile Include="ext\sdk\overlay\imgui\imgui_draw.cpp" />
+    <ClCompile Include="ext\sdk\overlay\imgui\imgui_impl_dx11.cpp" />
+    <ClCompile Include="ext\sdk\overlay\imgui\imgui_impl_win32.cpp" />
+    <ClCompile Include="ext\sdk\overlay\imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\source.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -3,13 +3,17 @@
 
 NTSTATUS WINAPI MainThread(LPVOID buffer)
 {
-	AllocConsole();
-	FILE* pStreamIn = { 0 };
-	freopen_s(&pStreamIn, "CONOUT", "w", stdout);
-
-	DWORD64 ModuleBase = (DWORD64)pGetModule->FindModuleHandle("FortniteClient-Win64-Shipping.exe");
-	std::cout << "Module Base: 0x" << std::hex << ModuleBase << "\n";
-
+	bool init_hook = false;
+	while (!init_hook)
+	{
+		DX11* pDX11 = new DX11();
+		if (pDX11->Initialize() == TRUE)
+		{
+			Hook* pHook = new Hook();
+			pHook->CreateHook(8, (LPVOID*)&pD3D11->oPresent, Detours::PresentDetour);
+			init_hook = true;
+		}
+	}
 	return TRUE;
 }
 
