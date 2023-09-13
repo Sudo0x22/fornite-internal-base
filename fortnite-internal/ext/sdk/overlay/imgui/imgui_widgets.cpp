@@ -985,7 +985,7 @@ ImColor To_Imcolor(float r, float g, float b, float a)
 
 bool ImGui::Checkbox(const char* label, bool* v)
 {
-    ImVec4 Col_On = ImColor(85, 0, 255, 255).Value;
+    ImVec4 Col_On = ImColor(15,150,150,255).Value;
     ImVec4 Col_Off = ImColor(28, 28, 28, 255).Value;
     int x = 16;
     ImGuiWindow* window = GetCurrentWindow();

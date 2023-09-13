@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -158,6 +158,7 @@
     <ClInclude Include="ext\sdk\utils\scanner\scanner.h" />
     <ClInclude Include="ext\sdk\utils\spoofer\spoofer.hpp" />
     <ClInclude Include="ext\sdk\utils\utils.h" />
+    <ClInclude Include="ext\sdk\vars\vars.h" />
   </ItemGroup>
   <ItemGroup>
     <MASM Include="ext\sdk\utils\spoofer\spoof.asm" />
