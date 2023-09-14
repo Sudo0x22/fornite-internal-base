@@ -11,6 +11,13 @@
 
 extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
+namespace Window
+{
+	LONG_PTR WINAPI SetWindowLongPtrX(HWND hWnd, INT Code, LONG_PTR Detour) {
+		return SpoofReturn(SetWindowLongPtrW, hWnd, Code, Detour);
+	}
+}
+
 class Overlay
 {
 public:
@@ -222,7 +229,7 @@ namespace Detours
 				pD3D11->pDevice->CreateRenderTargetView(pBackBuffer, nullptr, &pD3D11->pRenderTargetView);
 				pBackBuffer->Release();
 				ImGui::GetIO().ImeWindowHandle = pD3D11->hWindow;
-				pD3D11->oWndProc = (oWndProc_t)SetWindowLongPtr(pD3D11->hWindow, GWLP_WNDPROC, (LONG_PTR)WndProcDetour);
+				pD3D11->oWndProc = (oWndProc_t)Window::SetWindowLongPtrX(pD3D11->hWindow, GWLP_WNDPROC, (LONG_PTR)WndProcDetour);
 				pOverlay->InitImGui();
 				pOverlay->InitStyle();
 				pOverlay->init_imgui = true;

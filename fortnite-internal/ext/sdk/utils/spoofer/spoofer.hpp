@@ -7,7 +7,7 @@
 __declspec(allocate(".text")) const unsigned char jmpRdx[] = { 0xFF, 0x27 };//ReturnSpoof
 
 namespace ReturnAddressSpoofer {
-	extern "C" void* SpooferStub();
+	extern "C" void* SpooferStub() { return nullptr; };
 	template <typename Ret, typename... Args>
 	__forceinline static Ret Helper(const void* shell, Args... args)
 	{
@@ -41,9 +41,9 @@ namespace ReturnAddressSpoofer {
 template <typename result, typename... arguments>
 __forceinline static result SpoofReturn(result(*fn)(arguments...), arguments... args)
 {
-	return fn(args...);
+	//return fn(args...);
 
-	/*
+	
 	struct shell_params
 	{
 		const void* trampoline;
@@ -54,5 +54,5 @@ __forceinline static result SpoofReturn(result(*fn)(arguments...), arguments... 
 	shell_params params{ jmpRdx, reinterpret_cast<void*>(fn) };
 	using mapper = ReturnAddressSpoofer::Remapper<sizeof...(arguments), void>;
 	return mapper::template Call<result, arguments...>((const void*)&ReturnAddressSpoofer::SpooferStub, &params, args...);
-	*/
+	
 }
