@@ -51,7 +51,7 @@ NTSTATUS WINAPI DllMain(HINSTANCE hInstance, DWORD64 hReasons, LPVOID hBuffer)
 	
 	Thread* pThread = nullptr;
 	pThread->NtCreateThread((LPTHREAD_START_ROUTINE)MainThread, 0, 0);
-	pThread->NtCreateThread((LPTHREAD_START_ROUTINE)FeaturesThread, 0, 0);
+	//pThread->NtCreateThread((LPTHREAD_START_ROUTINE)FeaturesThread, 0, 0);
 
 	return TRUE;
 }

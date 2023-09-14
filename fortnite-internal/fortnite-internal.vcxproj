@@ -153,7 +153,10 @@
     <ClInclude Include="ext\sdk\overlay\imgui\imstb_truetype.h" />
     <ClInclude Include="ext\sdk\overlay\overlay.h" />
     <ClInclude Include="ext\sdk\sdk.h" />
+    <ClInclude Include="ext\sdk\utils\module\lazy_importer.h" />
     <ClInclude Include="ext\sdk\utils\module\module.h" />
+    <ClInclude Include="ext\sdk\utils\module\SkCrypt.h" />
+    <ClInclude Include="ext\sdk\utils\module\xorstr.h" />
     <ClInclude Include="ext\sdk\utils\offsets\offsets.h" />
     <ClInclude Include="ext\sdk\utils\scanner\scanner.h" />
     <ClInclude Include="ext\sdk\utils\spoofer\spoofer.hpp" />

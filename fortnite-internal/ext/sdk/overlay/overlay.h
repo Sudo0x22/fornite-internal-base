@@ -4,6 +4,10 @@
 #include"imgui/imgui_impl_dx11.h"
 #include"imgui/imgui_impl_win32.h"
 #include"../vars/vars.h"
+#include"icon/icon.h"
+#include"../utils/module/lazy_importer.h"
+#include"../utils/module/xorstr.h"
+#include"../utils/module/SkCrypt.h"
 
 extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
@@ -17,7 +21,8 @@ public:
 		Aimbot,
 		Visuals,
 		Binds,
-		Misc
+		Misc,
+		Configs,
 	};
 
 	MenuTabs CurrentTab = MenuTabs::Aimbot;
@@ -59,28 +64,32 @@ public:
 		pStyle->Colors[ImGuiCol_SeparatorHovered] = ImColor(15, 150, 150, 255);
 
 		pStyle->Colors[ImGuiCol_FrameBg] = ImColor(28, 28, 28, 255);
+		pStyle->Colors[ImGuiCol_FrameBgHovered] = ImColor(26, 26, 26, 255);
+		pStyle->Colors[ImGuiCol_FrameBgActive] = ImColor(23, 23, 23, 255);
 
 		return TRUE;
 
+		// FortniteClient-Win64-Shipping_EAC_EOS.exe
+		// fortnite-internal.dll
 	}
 
 	NTSTATUS WINAPI AimbotTab() { 
-		ImGui::Checkbox("Toggle Aimbot", &features::aimbot::enable_aimbot);
-		ImGui::Checkbox("Toggle Memory Aim", &features::aimbot::enable_memory_aimbot);
+		ImGui::Checkbox(skCrypt("Toggle Slient Aim").decrypt(), &features::aimbot::enable_slient_aim);
 		
-		ImGui::Checkbox("Toggle Slient Aim", &features::aimbot::enable_slient_aim);
-		ImGui::Checkbox("Toggle Aim Fov", &features::aimbot::enable_fov_circle);
-		
+		ImGui::Checkbox(skCrypt("Toggle Lock Aim").decrypt(), &features::aimbot::enable_memory_aimbot);
+		ImGui::Checkbox(skCrypt("Toggle Aim Fov").decrypt(), &features::aimbot::enable_fov_circle);
+
 		ImGui::Spacing();
-		ImGui::SliderInt("Aim Fov", &features::aimbot::aim_fov, 0, 180);
+		ImGui::Spacing();
+
+		ImGui::SliderInt(skCrypt("Aim Fov").decrypt(), &features::aimbot::aim_fov, 0, 180);
 
 		return TRUE; 
 	}
 	NTSTATUS WINAPI VisualsTab() { 
-		ImGui::Checkbox("Toggle Esp", &features::esp::enable_esp);
-		ImGui::Checkbox("Toggle Outline", &features::esp::enable_outline);
-		ImGui::Checkbox("Toggle Box Esp", &features::esp::enable_box);
-		ImGui::Checkbox("Toggle Health Esp", &features::esp::enable_health);
+		ImGui::Checkbox(skCrypt("Toggle Outline").decrypt(), &features::esp::enable_outline);
+		ImGui::Checkbox(skCrypt("Toggle Box Esp").decrypt(), &features::esp::enable_box);
+		ImGui::Checkbox(skCrypt("Toggle Health Esp").decrypt(), &features::esp::enable_health);
 		return TRUE; 
 	}
 	NTSTATUS WINAPI MiscTab() { return TRUE; }
@@ -108,18 +117,27 @@ public:
 				ImGui::Spacing();
 
 				ImGui::PushStyleColor(ImGuiCol_Button, Tab == MenuTabs::Aimbot ? Active : InActive);
-				if (ImGui::Button("Aimbot", ImVec2(width, height)))
+				if (ImGui::Button(skCrypt("Aimbot").decrypt(), ImVec2(width, height)))
 					Tab = MenuTabs::Aimbot;
 
 				ImGui::PushStyleColor(ImGuiCol_Button, Tab == MenuTabs::Visuals ? Active : InActive);
-				if (ImGui::Button("Visuals", ImVec2(width, height)))
+				if (ImGui::Button(skCrypt("Visuals").decrypt(), ImVec2(width, height)))
 					Tab = MenuTabs::Visuals;
 
 				ImGui::PushStyleColor(ImGuiCol_Button, Tab == MenuTabs::Misc ? Active : InActive);
-				if (ImGui::Button("Misc", ImVec2(width, height)))
+				if (ImGui::Button(skCrypt("Misc").decrypt(), ImVec2(width, height)))
 					Tab = MenuTabs::Misc;
 
-				ImGui::PopStyleColor(3);
+				ImGui::PushStyleColor(ImGuiCol_Button, Tab == MenuTabs::Binds ? Active : InActive);
+				if (ImGui::Button(skCrypt("Binds").decrypt(), ImVec2(width, height)))
+					Tab = MenuTabs::Binds;
+
+				ImGui::PushStyleColor(ImGuiCol_Button, Tab == MenuTabs::Configs ? Active : InActive);
+				if (ImGui::Button(skCrypt("Configs").decrypt(), ImVec2(width, height)))
+					Tab = MenuTabs::Configs;
+
+
+				ImGui::PopStyleColor(5);
 			}
 
 			ImGui::NextColumn();
@@ -135,6 +153,10 @@ public:
 					break;
 				case MenuTabs::Misc:
 					MiscTab();
+					break;
+				case MenuTabs::Binds:
+					break;
+				case MenuTabs::Configs:
 					break;
 				}
 			}
@@ -220,7 +242,7 @@ namespace Detours
 		pOverlay->capture_cursor = ImGui::GetIO().MouseDrawCursor;
 
 		if (m_pMemory->NtGetAsyncKeyState(VK_INSERT) & 0x1) { pOverlay->render_overlay = !pOverlay->render_overlay; }
-		if (pOverlay->render_overlay) { pOverlay->RenderOverlay("settings"); }
+		if (pOverlay->render_overlay) { pOverlay->RenderOverlay(skCrypt("settings").decrypt()); }
 
 		if (features::aimbot::enable_fov_circle)
 		{
